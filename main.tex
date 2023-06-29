@@ -1,0 +1,69 @@
+\documentclass{article}
+
+\usepackage{
+	amsthm,
+	amsmath,
+	amsfonts,
+	tikz,
+	xfp
+}
+
+\usepackage[bottom=3.5cm,left=2.8cm,right=2cm,top=3cm]{geometry}
+
+\newcommand{\ratio}{2.5} % radio de ubicación de los nodos.
+\newcommand{\ratiobullet}{0.45} % radio de tamaño de los nodos.
+\newcommand{\ratiobulletp}{0.3} % radio del nodo blanco interior.
+\newcommand{\widthline}{1.4} % ancho de la línea en milímetros.
+
+% grados de ubicación de nodos.
+\newcommand{\degone}{35}
+\newcommand{\degtwo}{90}
+\newcommand{\degthr}{145}
+
+% pares ordenados (cos(x), sen(x)).
+\newcommand{\cis}[2]{
+	( \fpeval{\ratio*cosd(#1)+#2}, \fpeval{\ratio*sind(#1)} )
+}
+
+% nodos respecto al grado de ubicación.
+\newcommand{\nodeg}[2][0]{
+	\filldraw[color=black,fill=black]\cis{#2}{#1}circle(\ratiobullet);
+	\filldraw[color=white,fill=white]\cis{#2}{#1}circle(\ratiobulletp);
+}
+
+\begin{document}
+
+\newcommand{\letterc}{
+
+	\draw[line width=4mm,black]\cis{\degthr}{0}--\cis{-\degthr}{0} ; % línea negra gruesa.
+	\draw[line width=1.2mm,white]\cis{\degthr}{0}--\cis{-\degthr}{0}; % línea blanca interna.
+
+	\draw[line width=\widthline mm]\cis{+\degone}{0}--\cis{+\degtwo}{0}--\cis{+\degthr}{0}; % línea nodos superiores.
+	\draw[line width=\widthline mm]\cis{-\degone}{0}--\cis{-\degtwo}{0}--\cis{-\degthr}{0}; % línea nodos inferiores.
+
+	\nodeg{+\degone}
+	\nodeg{-\degone}
+	\nodeg{+\degtwo}
+	\nodeg{-\degtwo}
+	\nodeg{+\degthr}
+	\nodeg{-\degthr}
+
+}
+
+\[
+\begin{tikzpicture}
+	\letterc
+\end{tikzpicture}
+\]
+
+\[\begin{tikzpicture}
+	\letterc
+	\node[scale=7]at(7,0){\fontfamily{bch}\selectfont
+		OMBINA
+	};
+	\node[scale=1.35]at(7.2,-1.4){\fontfamily{bch}\selectfont
+		GRUPO DE COMBINATORIA ALGEBRAICA
+	};
+\end{tikzpicture}\]
+
+\end{document}
